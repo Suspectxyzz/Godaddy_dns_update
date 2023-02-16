@@ -8,3 +8,6 @@ A script for dynamically update GoDaddy DNS records using systemd timers and GoD
 - sudo systemctl daemon-reload
 - sudo systemctl enable update.timer
 - sudo systemctl start update.timer
+
+#Careful
+update he must have permission `sudo update chmod +x"
