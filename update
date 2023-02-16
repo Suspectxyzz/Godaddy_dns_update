@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Replace this text with your GoDaddy login information
+API_KEY=""
+API_SECRET=""
+DOMAIN="exemp.com"
+
+# Discover the current IP address
+CURRENT_IP=$(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')
+
+# Retrieve the existing IP address registered for the domain
+DNS_IP=$(curl -s -X GET -H "Authorization: sso-key ${API_KEY}:${API_SECRET}" \
+  "https://api.godaddy.com/v1/domains/${DOMAIN}/records/A/@" | \
+  jq '.[].data' | tr -d '"')
+
+# Check if the existing IP address is different from the current IP address
+if [ "$CURRENT_IP" != "$DNS_IP" ]; then
+# Update the IP address for the domain
+  curl -X PUT "https://api.godaddy.com/v1/domains/${DOMAIN}/records/A/@" \
+    -H "Authorization: sso-key ${API_KEY}:${API_SECRET}" \
+    -H "Content-Type: application/json" \
+    -d "[{\"data\":\"${CURRENT_IP}\"}]"
+
+  echo "IP address for ${DOMAIN} was updated to ${CURRENT_IP}"
+else
+  echo "IP address for ${DOMAIN} is updated and is ${DNS_IP}"
+fi

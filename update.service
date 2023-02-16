@@ -1,0 +1,5 @@
+[Unit]
+Description=My script
+
+[Service]
+ExecStart=/home/dns/run.sh
