@@ -1,5 +1,6 @@
 [Unit]
-Description=My script
+Description=Godaddy DDNS IP update
 
 [Service]
-ExecStart=/home/dns/run.sh
+Type=oneshot
+ExecStart=/media/dns/update
