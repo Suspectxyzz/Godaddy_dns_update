@@ -1,11 +1,9 @@
 [Unit]
-Description=Run script every 10 minutes
+Description=Run Godaddy DDNS IP update every 10 minutes
 
 [Timer]
-OnBootSec=10min
-OnUnitActiveSec=10min
-Unit=update.service
+OnCalendar=*-*-* *:*:0/10
+Persistent=true
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=timers.target
